@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import db from "../../db.json";
 
-interface Benefit {
+export interface Benefit {
   id: number;
   title: string;
   description: string;
