@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Benefit } from "@/components/BenefitsSection";
+import db from "../../db.json";
 
 interface BenefitsStoreState {
   benefits: Benefit[];
@@ -15,24 +15,23 @@ export const benefitsStore = create<BenefitsStoreState>((set) => ({
   fetchBenefits: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await fetch("http://localhost:3000/benefits");
-      if (!res.ok) throw new Error("Failed to fetch benefits");
-      const data = await res.json();
-
-      let arr: Benefit[] = [];
-      if (Array.isArray(data)) {
-        arr = data as Benefit[];
-      } else if (Array.isArray(data.benefits)) {
-        arr = data.benefits as Benefit[];
+      let data;
+      if (typeof window !== "undefined" && window.location.hostname === "localhost") {
+        // Use local db.json directly in dev
+        data = db.benefits;
+      } else {
+        const res = await fetch("/api/mock-data");
+        if (!res.ok) throw new Error("Failed to fetch benefits");
+        const apiData = await res.json();
+        data = apiData.benefits;
       }
-      set({
-        benefits: arr,
-        loading: false,
-      });
+      set({ benefits: data, loading: false });
     } catch (err) {
       let message = "Unknown error";
-      if (err instanceof Error) message = err.message;
-      set({ error: message, loading: false, benefits: [] });
+      if (err instanceof Error) {
+        message = err.message;
+      }
+      set({ error: message, loading: false });
     }
   },
 }));

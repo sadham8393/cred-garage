@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import db from "../../db.json";
 
 interface XpState {
   points: number;
@@ -22,11 +23,16 @@ export const rewardsStore = create<RewardsStoreState>((set) => ({
   fetchPoints: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await fetch("http://localhost:3000/xpPoints");
-      if (!res.ok) throw new Error("Failed to fetch Xp Points data");
-      const data = await res.json();
-
-      // Expecting data.xpPoints: { points: number, maxPoints: number }
+      let data;
+      if (typeof window !== "undefined" && window.location.hostname === "localhost") {
+        // Use local db.json directly in dev
+        data = db.xpPoints;
+      } else {
+        const res = await fetch("/api/mock-data");
+        if (!res.ok) throw new Error("Failed to fetch XP points");
+        const apiData = await res.json();
+        data = apiData.xpPoints;
+      }
       if (!data) throw new Error("XP Points not found in response");
       set({ xp: { points: data.points, maxPoints: data.maxPoints }, loading: false });
     } catch (err) {

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import db from "../../db.json";
 
 export interface UserProfileData {
   avatarUrl: string;
@@ -22,9 +23,16 @@ export const userStore = create<UserStoreState>((set) => ({
   fetchUser: async () => {
     set({ loading: true, error: null });
     try {
-      const res = await fetch("http://localhost:3000/user");
-      if (!res.ok) throw new Error("Failed to fetch user data");
-      const data: UserProfileData = await res.json();
+      let data: UserProfileData;
+      if (typeof window !== "undefined" && window.location.hostname === "localhost") {
+        // Use local db.json directly in dev
+        data = db.user;
+      } else {
+        const res = await fetch("/api/mock-data");
+        if (!res.ok) throw new Error("Failed to fetch user data");
+        const apiData = await res.json();
+        data = apiData.user;
+      }
       set({ user: data, loading: false });
     } catch (err) {
       let message = "Unknown error";
