@@ -1,0 +1,33 @@
+{
+  "user": {
+    "avatarUrl": "https://randomuser.me/api/portraits/men/32.jpg",
+    "name": "John Doe",
+    "level": 7,
+    "xp": 3400,
+    "xpMax": 5000
+  },
+  "xpPoints": {
+    "points": 4200,
+    "maxPoints": 7200
+  },
+  "benefits": [
+    {
+      "title": "10% Off on Shopping",
+      "icon": "FaTag",
+      "description": "Get 10% instant discount on select partners.",
+      "cta": "Claim"
+    },
+    {
+      "title": "Free Movie Ticket",
+      "icon": "FaTicketAlt",
+      "description": "Enjoy a free movie ticket every month.",
+      "cta": "View"
+    },
+    {
+      "title": "Gift Voucher",
+      "icon": "FaGift",
+      "description": "Exclusive gift vouchers for top users.",
+      "cta": "Redeem"
+    }
+  ]
+}
