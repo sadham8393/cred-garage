@@ -89,7 +89,6 @@ if (typeof HTMLCanvasElement !== "undefined") {
 
 // --- Zustand store hook mocks for all tests (for ESM dynamic imports too) ---
 
-
 import type { UserStoreState } from "./store/userStore";
 import type { RewardsStoreState } from "./store/rewardsStore";
 
@@ -116,26 +115,23 @@ vi.mock("./store/rewardsStore", () => ({
     selector(mockRewardsStoreState),
 }));
 
-declare global {
-  var __setUserStoreState: (patch: Partial<UserStoreState>) => void;
-  var __setRewardsStoreState: (patch: Partial<RewardsStoreState>) => void;
-}
-
-globalThis.__setUserStoreState = (patch: Partial<UserStoreState>) => {
-  // Always coerce fetchUser to async fn if present
-  const next = { ...patch };
-  if (typeof next.fetchUser === "function") {
-    next.fetchUser = vi.fn(async (...args: any[]) => (next.fetchUser as any)(...args));
-  }
-  mockUserStoreState = { ...mockUserStoreState, ...next };
+globalThis.__setUserStoreState = (patch) => {
+  mockUserStoreState = {
+    ...patch,
+    user: patch.user ?? mockUserStoreState.user,
+    loading: patch.loading ?? mockUserStoreState.loading,
+    error: patch.error ?? mockUserStoreState.error,
+    fetchUser: vi.fn(async () => {}),
+  };
 };
-globalThis.__setRewardsStoreState = (patch: Partial<RewardsStoreState>) => {
-  // Always coerce fetchPoints to async fn if present
-  const next = { ...patch };
-  if (typeof next.fetchPoints === "function") {
-    next.fetchPoints = vi.fn(async (...args: any[]) => (next.fetchPoints as any)(...args));
-  }
-  mockRewardsStoreState = { ...mockRewardsStoreState, ...next };
+globalThis.__setRewardsStoreState = (patch) => {
+  mockRewardsStoreState = {
+    ...patch,
+    xp: patch.xp ?? mockRewardsStoreState.xp,
+    loading: patch.loading ?? mockRewardsStoreState.loading,
+    error: patch.error ?? mockRewardsStoreState.error,
+    fetchPoints: vi.fn(async () => {}),
+  };
 };
 // Vitest setup file for jest-dom matchers
 import "@testing-library/jest-dom";
