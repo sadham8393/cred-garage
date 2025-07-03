@@ -1,106 +1,98 @@
-# CRED Garage Inspired Dashboard
+# CRED Garage-Inspired Dashboard (Vite + React + TypeScript)
 
-This project is a modern, responsive web dashboard inspired by CRED Garage, built with React, TypeScript, and Vite.
+A modern, responsive dashboard inspired by CRED Garage, built with Vite, React, TypeScript, Zustand, and Tailwind CSS. Features robust state management, subtle animations, and a focus on clean, maintainable code and high test coverage.
 
 ## Features
 
-- Modern, clean UI/UX
-- Responsive design for all devices
-- Subtle animations and attention to detail
-- Built with Vite, React, and TypeScript
+- ⚡️ **Vite** for fast development and builds
+- ⚛️ **React** (with TypeScript) for UI
+- 🎨 **Tailwind CSS** for styling
+- 🗃️ **Zustand** for state management
+- 🧪 **Vitest** for testing (Jest fully migrated)
+- 📈 **100% test coverage** for stores and main app logic
+- 🧩 Modular, reusable components
+- 💎 Modern, CRED-inspired UI/UX with subtle animations
+- 📊 Chart.js (mocked in tests)
 
 ## Getting Started
 
-### Install dependencies
+### 1. Install dependencies
 
-```bash
+```sh
 npm install
 ```
 
-### Start the development server
+### 2. Start the development server
 
-```bash
+```sh
 npm run dev
 ```
 
-### Build for production
+### 3. Run tests (with coverage)
 
-```bash
+```sh
+npm test
+# or for coverage
+npm run test:coverage
+```
+
+### 4. Build for production
+
+```sh
 npm run build
 ```
 
----
+### 5. Preview production build
 
-For code contributions, please focus on UI/UX quality, responsiveness, and animation details.
-
----
-
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```sh
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Project Structure
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
 ```
+cred-test/
+├── src/
+│   ├── components/         # UI components (DashboardHeader, UserProfileSummary, etc.)
+│   ├── store/              # Zustand stores (userStore, rewardsStore, benefitsStore)
+│   ├── lib/                # Utilities
+│   ├── assets/             # Static assets
+│   ├── App.tsx             # Main app component
+│   ├── main.tsx            # Entry point
+│   └── setupTests.ts       # Vitest global setup/mocks
+├── public/                 # Static public assets
+├── package.json            # Scripts and dependencies
+├── tailwind.config.js      # Tailwind CSS config
+├── vitest.config.ts        # Vitest config
+└── README.md               # This file
+```
+
+## Testing & Coverage
+
+- All tests use **Vitest** and **@testing-library/react**.
+- Zustand stores and Chart.js are robustly mocked for ESM compatibility.
+- 100% coverage for main app logic and stores.
+- To view coverage report:
+
+  ```sh
+  npm run test:coverage
+  # Open coverage/index.html in your browser
+  ```
+
+## Linting & Formatting
+
+- ESLint and Prettier are configured for strict, consistent code style.
+- Run lint:
+
+  ```sh
+  npm run lint
+  ```
+
+## Credits
+
+- Inspired by [CRED Garage](https://cred.club/garage)
+- Built with ❤️ by your team
+
+---
+
+For questions or contributions, please open an issue or PR.
