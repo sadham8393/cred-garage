@@ -1,6 +1,12 @@
 import { create } from "zustand";
 import db from "../../db.json";
 
+interface Benefit {
+  id: number;
+  title: string;
+  description: string;
+}
+
 interface BenefitsStoreState {
   benefits: Benefit[];
   loading: boolean;
